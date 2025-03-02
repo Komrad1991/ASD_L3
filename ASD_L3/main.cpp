@@ -13,6 +13,8 @@ int main()
 	bdp1.add(6);
 	bdp1.print_rtl();
 	std::cout << std::endl;
+	bdp1.print_ltr();
+	std::cout << std::endl;
 	auto seven = bdp1.find(7);
 	std::cout << seven->data << std::endl;
 	std::cout << bdp1.min() << std::endl;
@@ -47,4 +49,5 @@ int main()
 	eq3.add(8);
 	eq3.add(6);
 	std::cout << eq1.equal(eq3) << std::endl;
+	eq3.print_levels();
 }

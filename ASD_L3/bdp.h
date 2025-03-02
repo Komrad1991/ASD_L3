@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stack>
 #include <vector>
+#include <queue>
 
 template<typename T, typename comparator = std::less<T>>
 class bdp
@@ -40,6 +41,26 @@ public:
 		else if (comp(value,_head->data))
 			rec_add_l(value, _head);
 		else rec_add_r(value, _head);
+	}
+
+	void print_levels()
+	{
+		if (!_head) return;
+		std::queue<node*> q;
+		q.push(_head);
+		while (!q.empty())
+		{
+			int size = q.size();
+			for (int i = 0; i < size; i++)
+			{
+				node* nod = q.front();
+				q.pop();
+				if (nod->left) q.push(nod->left);
+				if (nod->right) q.push(nod->right);
+				std::cout << nod->data << " ";
+			}
+			std::cout << std::endl;
+		}
 	}
 
 	void print_ltr()
@@ -151,6 +172,16 @@ public:
 			return false;
 		}
 		else return true;
+	}
+
+	node* next(node* n)
+	{
+		return upper(n->data);
+	}
+
+	node* prev(node* n)
+	{
+		return lower(n->data);
 	}
 
 private:
