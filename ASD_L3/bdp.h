@@ -94,6 +94,7 @@ public:
 	node* find(T value)
 	{
 		if (!_head) return nullptr;
+		else if (!comp(value, _head->data) && !comp(_head->data, value)) return _head;
 		else if (comp(value,_head->data)) return find_rec(value,_head->left);
 		else return find_rec(value,_head->right);
 	}
@@ -120,6 +121,18 @@ public:
 		std::stack<node*> sub;
 		if (elem->left) sub.push(elem->left);
 		if (elem->right) sub.push(elem->right);
+		if (sub.empty())
+		{
+			if (comp(value, elem->parent->data))
+			{
+				elem->parent->left = nullptr;
+			}
+			else
+			{
+				elem->parent->right = nullptr;
+			}
+			return;
+		}
 		while (!sub.empty())
 		{
 			node* out = sub.top();
@@ -128,16 +141,17 @@ public:
 			if (out->left) sub.push(out->left);
 			subTree.add(out->data);
 		}
+		if (!subTree._head) return;
 		if (elem == _head) _head = subTree._head;
 		else if (comp(value, elem->parent->data))
 		{
 			elem->parent->left = subTree._head;
-			subTree._head = elem->parent;
+			subTree._head->parent = elem->parent;
 		}
 		else
 		{
 			elem->parent->right = subTree._head;
-			subTree._head = elem->parent;
+			subTree._head->parent = elem->parent;
 		}
 	}
 
@@ -292,5 +306,9 @@ private:
 				rec_add_r(value, prev->right);
 			}
 	}
-	
 };
+
+
+void eratosphenMySet(int n);
+
+void eratosphenVector(int n);
